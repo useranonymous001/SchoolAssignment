@@ -42,7 +42,6 @@ int main()
 
     // Closing the file
     fclose(filePointer);
-
     printf("Student records written to file successfully.\n");
 
     return 0;
