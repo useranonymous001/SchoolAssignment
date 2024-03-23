@@ -1,0 +1,49 @@
+<?php
+session_start();
+
+// Define the valid username and password
+$validUsername = "admin";
+$validPassword = "password";
+
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get username and password from the form
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+
+    // Check if username and password match the valid credentials
+    if ($username === $validUsername && $password === $validPassword) {
+        // Authentication successful, set session variables
+        $_SESSION["username"] = $username;
+
+        // Redirect to a welcome page
+        header("Location: welcome.php");
+        exit();
+    } else {
+        // Authentication failed, show error message
+        $errorMessage = "Invalid username or password!";
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <h2>Login </h2>
+    <?php if (isset($errorMessage)) { ?>
+        <p style="color: red;"><?php echo $errorMessage; ?></p>
+    <?php } ?>
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+        <label for="username"> Username:</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password"><br><br>
+        <input type="submit" value="Login">
+    </form>
+</body>
+</html>
